@@ -1,0 +1,341 @@
+:root {
+  --neon-blue: #00f3ff;
+  --neon-pink: #ff00ff;
+  --neon-green: #00ff00;
+  --neon-yellow: #ffff00;
+  --bg-color: #050505;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+    font-family: 'Orbitron', monospace;
+    background: linear-gradient(-45deg, #1a0b2e, #2d1b4e, #0f3460, #16213e);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: white;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: crosshair;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  transition: opacity 0.5s ease;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.content {
+  background: var(--glass-bg);
+  padding: 3rem;
+  border: 2px solid var(--neon-blue);
+  box-shadow: 0 0 20px var(--neon-blue);
+  text-align: center;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  max-width: 90%;
+}
+
+.neon-text {
+  font-size: 3rem;
+  color: white;
+  text-shadow:
+    0 0 5px white,
+    0 0 10px var(--neon-pink),
+    0 0 20px var(--neon-pink),
+    0 0 40px var(--neon-pink);
+  animation: flicker 1.5s infinite alternate;
+}
+
+.neon-btn {
+  margin-top: 20px;
+  background: transparent;
+  color: var(--neon-green);
+  border: 2px solid var(--neon-green);
+  padding: 10px 30px;
+  font-size: 1.2rem;
+  font-family: "Orbitron", monospace;
+  cursor: pointer;
+  box-shadow:
+    0 0 10px var(--neon-green) inset,
+    0 0 10px var(--neon-green);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.neon-btn:hover {
+  background: var(--neon-green);
+  color: black;
+  box-shadow:
+    0 0 30px var(--neon-green) inset,
+    0 0 30px var(--neon-green);
+}
+
+input[type="text"] {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--neon-blue);
+  color: white;
+  font-size: 1.5rem;
+  font-family: "Orbitron", monospace;
+  text-align: center;
+  padding: 10px;
+  margin: 20px 0;
+  outline: none;
+  width: 100%;
+  transition: box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus {
+  box-shadow: 0 10px 10px -10px var(--neon-blue);
+}
+
+/* HUD & Stats */
+.game-ui {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hud {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 30px;
+  background: var(--glass-bg);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hud-item {
+  text-align: center;
+}
+
+.label {
+  display: block;
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-bottom: 5px;
+}
+
+.value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px currentColor;
+}
+
+.neon-blue {
+  color: var(--neon-blue);
+}
+.neon-pink {
+  color: var(--neon-pink);
+}
+.neon-green {
+  color: var(--neon-green);
+}
+.neon-yellow {
+  color: var(--neon-yellow);
+}
+
+/* Game Board */
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  perspective: 1000px;
+}
+
+.hole {
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, #222 20%, #000 70%);
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid var(--neon-blue);
+  box-shadow:
+    0 0 15px var(--neon-blue),
+    inset 0 0 20px #000;
+}
+
+.hole::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  background: var(--neon-blue);
+  filter: blur(5px);
+  opacity: 0.5;
+}
+
+.mole {
+  width: 70%;
+  height: 90%;
+  background: linear-gradient(180deg, var(--neon-pink) 0%, #a000a0 100%);
+  position: absolute;
+  top: 100%;
+  left: 15%;
+  border-radius: 40% 40% 10px 10px;
+  transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 0 20px var(--neon-pink);
+}
+
+.mole.up {
+  top: 10%;
+}
+
+.mole.bonked {
+  background: white;
+  box-shadow: 0 0 50px white;
+  top: 10%;
+  transition: all 0.1s;
+  animation: shake 0.2s;
+}
+
+/* Mole Face (CSS only features) */
+.mole::after {
+  content: "0_0";
+  font-family: monospace;
+  font-size: 2rem;
+  color: black;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.dirt {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 10px;
+  background: #000;
+  z-index: 2;
+}
+
+/* Animations */
+#confettiCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 200;
+}
+
+@keyframes flicker {
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+    opacity: 1;
+    text-shadow:
+      0 0 5px white,
+      0 0 10px var(--neon-pink),
+      0 0 20px var(--neon-pink);
+  }
+  20%,
+  24%,
+  55% {
+    opacity: 0.5;
+    text-shadow: none;
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(-55%);
+  }
+  25% {
+    transform: translateX(-45%);
+  }
+  50% {
+    transform: translateX(-55%);
+  }
+  75% {
+    transform: translateX(-45%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+}
+
+.score-popup {
+  position: absolute;
+  color: var(--neon-yellow);
+  font-weight: bold;
+  font-size: 1.5rem;
+  pointer-events: none;
+  animation: floatUp 0.8s ease-out forwards;
+  z-index: 10;
+}
+
+@media (max-width: 600px) {
+  .game-board {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  .hole {
+    width: 120px;
+    height: 120px;
+  }
+  .hud {
+    flex-wrap: wrap;
+  }
+  .hud-item {
+    width: 50%;
+    margin-bottom: 10px;
+  }
+}

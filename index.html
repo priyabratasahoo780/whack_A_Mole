@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Whack-a-Mole 2077</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <canvas id="confettiCanvas"></canvas>
+    
+    <!-- Start Screen Overlay -->
+    <div id="startScreen" class="overlay active">
+      <div class="content glitched">
+        <h1 class="neon-text">NEON MOLE<br />HUNTER</h1>
+        <p>Enter your alias, hunter.</p>
+        <input
+          type="text"
+          id="usernameInput"
+          placeholder="PLAYER_ONE"
+          autocomplete="off"
+          maxlength="10"
+        />
+        <button id="startGameBtn" class="neon-btn">INITIALIZE</button>
+      </div>
+    </div>
+
+    <!-- Game UI -->
+    <div class="container game-ui hidden">
+      <header class="hud">
+        <div class="hud-item">
+          <span class="label">PLAYER</span>
+          <span id="playerNameDisplay" class="value neon-blue">---</span>
+        </div>
+        <div class="hud-item">
+          <span class="label">SCORE</span>
+          <span id="score" class="value neon-pink">0</span>
+        </div>
+        <div class="hud-item">
+          <span class="label">TIME</span>
+          <span id="timeLeft" class="value neon-green">30</span>
+        </div>
+        <div class="hud-item">
+          <span class="label">HIGH SCORE</span>
+          <span id="maxScore" class="value neon-yellow">0</span>
+        </div>
+      </header>
+
+      <div class="game-board">
+        <div class="hole" id="hole1">
+          <div class="mole"></div>
+          <div class="dirt"></div>
+        </div>
+        <div class="hole" id="hole2">
+          <div class="mole"></div>
+          <div class="dirt"></div>
+        </div>
+        <div class="hole" id="hole3">
+          <div class="mole"></div>
+          <div class="dirt"></div>
+        </div>
+        <div class="hole" id="hole4">
+          <div class="mole"></div>
+          <div class="dirt"></div>
+        </div>
+        <div class="hole" id="hole5">
+          <div class="mole"></div>
+          <div class="dirt"></div>
+        </div>
+        <div class="hole" id="hole6">
+          <div class="mole"></div>
+          <div class="dirt"></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="gameStartBtn" class="neon-btn small">START GAME</button>
+        <button id="pauseBtn" class="neon-btn small">PAUSE</button>
+        <button id="gameResetBtn" class="neon-btn small">RESET GAME</button>
+      </div>
+    </div>
+
+    <!-- Game Over / High Score Modal -->
+    <div id="gameOverModal" class="overlay">
+      <div class="content">
+        <h2 id="gameOverTitle" class="neon-text">MISSION COMPLETE</h2>
+        <p>AGENT: <span id="winnerName" class="neon-blue">---</span></p>
+        <div class="final-stats">
+          <p>SCORE: <span id="finalScore" class="neon-pink">0</span></p>
+          <p>HIGH SCORE: <span id="finalHighScore" class="neon-yellow">0</span></p>
+          <div id="highScoreMessage" class="hidden">
+            <p class="blink">NEW HIGH SCORE!</p>
+            <p class="cheer">LEGENDARY STATUS ACHIEVED</p>
+          </div>
+        </div>
+        <button id="restartBtn" class="neon-btn">REBOOT SYSTEM</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
